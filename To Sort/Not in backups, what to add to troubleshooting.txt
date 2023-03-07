@@ -1,0 +1,14 @@
+
+not in backup:
+	Make OBS Mirror cursor in the display capture
+
+	delete f6 key send at end of startup ahk script
+
+
+
+
+
+
+Add to sim troubleshooting: Move mouse onto right "screen" that doesn't exist to be able to use mirrored controls. 
+
+For flight sims, close autohotkey by click cause it's looping clicks. Task manager > Find autohotkey > end task
