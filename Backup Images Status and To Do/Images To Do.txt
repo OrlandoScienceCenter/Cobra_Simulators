@@ -1,0 +1,10 @@
+Driving Sim images To Do:
+	
+	Make OBS Mirror cursor in the display capture on driving sim
+	
+	delete f6 key send at end of startup ahk script
+
+Flight sim images to do:
+
+	Add backup gauges panel
+
