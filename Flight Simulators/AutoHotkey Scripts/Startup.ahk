@@ -11,11 +11,11 @@ Sleep(10 * 1000)
 ; Kill existing in case we're restarting stuff
 ProcessClose("obs64.exe")
 ProcessClose("omnidome.exe")
-ProcessClose("Prepar3d.exe")
+ProcessClose("Prepar3D.exe")
 Sleep(2 * 1000)
 ProcessClose("obs64.exe")
 ProcessClose("omnidome.exe")
-ProcessClose("Prepar3d.exe")
+ProcessClose("Prepar3D.exe")
 
 Sleep(1 * 1000)
 
@@ -244,26 +244,45 @@ Sleep(0.25 * 1000)
 
 ; Start Prepar3D
 Run("C:\Program Files\Lockheed Martin\Prepar3D v5\Prepar3D.exe", , )
-Sleep(10 * 1000)
+Sleep(20 * 1000)
 
 ; Click middle of screen
 Click(500, 500)
-Sleep(6 * 1000)
+Sleep(1 * 1000)
 
-; Activate obs
 SetTitleMatchMode 2
 
 WinActivate("OBS")
+Sleep(2 * 1000)
+WinActivate("Lockheed")
 Sleep(1 * 1000)
 
-WinActivate("Prepar3D")
-Sleep(1 * 1000)
+global stopLoop := 0
 
 Loop
 {
-    
+    If (stopLoop = 1)
+        Break
+
     Click(957, 583)
     Sleep(1 * 1000)
 }
 
 Exit
+
+Esc::
+{
+    global stopLoop
+    
+    if (stopLoop = 0)
+    {
+        stopLoop := 1
+        return
+    }
+
+    if (stopLoop = 1)
+    {
+        stopLoop := 0
+        return
+    }
+}
