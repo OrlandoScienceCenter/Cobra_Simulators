@@ -6,6 +6,9 @@
 //
 //------------------------------------------------------------
 
+// UPLOAD NOTES:
+// Select board as Leonardo even though it's a pro micro
+
 // Wiring info middle flight sim:
 
 // Joystick ------------- Arduino Pin
@@ -23,6 +26,8 @@ Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,
 
 const bool testAutoSendMode = false;
 
+const int PIN_THROTTLE_POTENTIOMETER = A2;
+
 void setup() {
 
   Serial.begin(115200);
@@ -30,7 +35,7 @@ void setup() {
   Joystick.setXAxisRange(0, 1024);
   Joystick.setYAxisRange(0, 1024);
   
-  //Joystick.setThrottleRange(0, 255);
+  Joystick.setThrottleRange(0, 255);
   
   if (testAutoSendMode)
   {
@@ -55,6 +60,8 @@ void loop()
   checkAndSendResetButton(6);
 
   checkAndSendXYAxis(A0, A1);
+
+  checkAndSendThrottle(PIN_THROTTLE_POTENTIOMETER);
     
   if (testAutoSendMode == false)
   {
@@ -62,7 +69,8 @@ void loop()
   }
 }
 
-void checkAndSendResetButton(int buttonPin){
+void checkAndSendResetButton(int buttonPin)
+{
   if (!digitalRead(buttonPin))
   {
     Joystick.pressButton(0);
@@ -92,6 +100,19 @@ void checkAndSendXYAxis(int pinXAxis, int pinYAxis)
 
 void testThrottleRudder(unsigned int value)
 {
-  Joystick.setThrottle(value);
   Joystick.setRudder(255 - value);
+}
+
+void checkAndSendThrottle(int throttlePin)
+{
+  int throttleRawValue = analogRead(throttlePin);
+
+  int throttleValueMapped = map(throttleRawValue, 270, 910, 0, 254);
+
+  Joystick.setThrottle(throttleValueMapped);
+
+  Serial.print("Throttle value map'd: ");
+  Serial.println(throttleValueMapped);
+
+  delay(200);
 }
