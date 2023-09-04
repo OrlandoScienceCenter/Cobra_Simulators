@@ -1,5 +1,13 @@
 #Requires AutoHotkey v2.0
 
+global clickLoopEnabled := true
+
+Esc::
+{
+    global clickLoopEnabled
+	clickLoopEnabled := !clickLoopEnabled
+}
+
 ; Make all mouse coordinates relative to screen absolute coords
 CoordMode "Mouse", "Screen"
 
@@ -11,15 +19,13 @@ Sleep(10 * 1000)
 ; Kill existing in case we're restarting stuff
 ProcessClose("obs64.exe")
 ProcessClose("omnidome.exe")
-ProcessClose("Prepar3D.exe")
+ProcessClose("Prepar3d.exe")
 Sleep(2 * 1000)
 ProcessClose("obs64.exe")
 ProcessClose("omnidome.exe")
-ProcessClose("Prepar3D.exe")
+ProcessClose("Prepar3d.exe")
 
-Sleep(1 * 1000)
-
-; ;Sleep 10 * 1000
+Sleep 5 * 1000
 
 Run("C:\Program Files\obs-studio\bin\64bit\obs64.exe", "C:\Program Files\obs-studio\bin\64bit\", "Min")
 
@@ -244,45 +250,27 @@ Sleep(0.25 * 1000)
 
 ; Start Prepar3D
 Run("C:\Program Files\Lockheed Martin\Prepar3D v5\Prepar3D.exe", , )
-Sleep(20 * 1000)
+Sleep(10 * 1000)
 
 ; Click middle of screen
 Click(500, 500)
-Sleep(1 * 1000)
+Sleep(30 * 1000)
 
+; Activate obs
 SetTitleMatchMode 2
 
 WinActivate("OBS")
 Sleep(2 * 1000)
-WinActivate("Lockheed")
+
+WinActivate("Prepar3D")
 Sleep(1 * 1000)
 
-global stopLoop := 0
+global clickLoopEnabled
 
-Loop
+While clickLoopEnabled
 {
-    If (stopLoop = 1)
-        Break
-
     Click(957, 583)
     Sleep(1 * 1000)
 }
 
 Exit
-
-Esc::
-{
-    global stopLoop
-    
-    if (stopLoop = 0)
-    {
-        stopLoop := 1
-        return
-    }
-
-    if (stopLoop = 1)
-    {
-        stopLoop := 0
-        return
-    }
-}
