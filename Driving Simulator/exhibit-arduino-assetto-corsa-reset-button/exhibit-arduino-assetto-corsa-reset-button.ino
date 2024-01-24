@@ -5,6 +5,9 @@
 
 char ctrlKey = KEY_LEFT_CTRL;  
 
+// Needed to change this sketch to use a normally closed button that someone installed in the sim.
+// If someone replaces it with a normally open button, delete the exclamation mark in front of digitalRead on line 22
+
 void setup() 
 {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
